@@ -1,3 +1,12 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>login</title>
+        <link rel="stylesheet" href="../styles/stylelogin.css">
+</head>
+<body>
 <h2>Connexion</h2>
 <a href="../index.php">Retour Acceuil</a>
  <br><br>
@@ -10,3 +19,5 @@
         <br><br>
         <input type="submit" value="log in">
 </form>
+</body>
+</html>
