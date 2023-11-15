@@ -1,6 +1,6 @@
 
-<h2>Enregistrement </h2>
-<a href="../index.php">Retour Acceuil</a>
+<h2>Enregistrement </h2><br><br>
+<a href="../index.php">Retour Acceuil</a><br><br>
 
 <?php 
 session_start();
@@ -12,12 +12,12 @@ session_start();
         <label for="user_name">Nom d'utilisateur :</label>
         <input type="text" id="user_name" name="user_name" 
         value="<?php echo isset($_SESSION["signup-form"] ["user_name"])? $_SESSION["signup-form"] ["user_name"]:"";  ?>">
-        <br>
+        <br><br>
         <label for="email">Email   :  </label>
         <input type="email" id="email" name="email">
-        <br>
+        <br><br>
         <label for="pwd">Mot de Passe :    </label>
         <input type="password" id="pwd" name="pwd">
-        <br>
+        <br><br>
         <input type="submit" value="signup">
 </form>
