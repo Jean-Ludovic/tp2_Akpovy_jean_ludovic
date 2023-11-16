@@ -2,8 +2,8 @@
 
 //  les informations de connexion de votre base de données
 $host = "localhost";
-$username = "Julien_Dussollier";
-$password = "groupe433";
+$username = "root";
+$password = "";
 $database = "Ecom1_tp2";
 
 // Création de la connexion

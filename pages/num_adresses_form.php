@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="../styles/styleform.css">
     <title>Nombre d'Adresses</title>
 </head>
-<body>
+<<body>
     <h2>Nombre d'Adresses</h2>
     <form action="../index.php" method="post">
         <label for="num_addresses">Combien d'adresses avez-vous ?</label>
