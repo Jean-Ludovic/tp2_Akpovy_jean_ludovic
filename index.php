@@ -1,5 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accueil</title>
+    <link rel="stylesheet" type="text/css" href="./styles/styleindex.css">
+</head>
 <?php
-// index.php
+
 require_once("config/connexion.php");
 
 if (isset($_POST['num_formulaires'])) {
@@ -11,21 +19,20 @@ if (isset($_POST['num_formulaires'])) {
 }
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Accueil</title>
-</head>
-<body>
-    <h2>Bienvenue sur notre site</h2>
 
-    <!-- Formulaire pour demander combien de fois l'utilisateur veut remplir le formulaire -->
-    <form action="index.php" method="post">
-        <label for="num_formulaires">Combien de fois souhaitez-vous remplir le formulaire ?</label>
-        <input type="number" id="num_formulaires" name="num_formulaires" min="1" required>
-        <input type="submit" value="Continuer">
-    </form>
+<body>
+<div class="container">
+        <h1>Bienvenue sur notre site</h1>
+
+        <!-- Formulaire pour demander combien de fois l'utilisateur veut remplir le formulaire -->
+        <form action="index.php" method="post">
+            <fieldset>
+                <legend>Formulaire</legend>
+                <label for="num_formulaires">Combien de fois souhaitez-vous remplir le formulaire ?</label>
+                <input type="number" id="num_formulaires" name="num_formulaires" min="1" required>
+                <input type="submit" value="Continuer">
+            </fieldset>
+        </form>
+    </div>
 </body>
 </html>

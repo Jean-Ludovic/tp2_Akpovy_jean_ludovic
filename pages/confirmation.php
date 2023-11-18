@@ -1,3 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirmation</title>
+    <link rel="stylesheet" type="text/css" href="../styles/boss.css">
+</head>
+<body>
+    
+</body>
+</html>
+
 <?php
 require_once("../config/connexion.php");
 require_once("../config/functions.php");
@@ -32,9 +45,8 @@ if (isset($_GET['num_formulaires']) && isset($_GET['current_iteration'])) {
         echo "<p>Aucune donnée soumise.</p>";
     }
     ?>
-
-    <p>Merci pour votre soumission!</p><br><br>
-    <p>Cela vous convient-il ?</p><br><br>
+    <p>Merci pour votre soumission!</p><br>
+    <p>Cela vous convient-il ?</p><br>
     
     <!-- Modifier l'action du formulaire pour inclure les paramètres nécessaires -->
     <form action="adresse.php" method="get">
