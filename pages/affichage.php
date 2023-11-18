@@ -9,7 +9,7 @@
 <body>
     <h2>Merci pour votre visite </h1><br><br>
     <h1><a href="confirmation.php">Aller à la page de confirmation</a><br><br>
-    <a href="index.php">Aller à la page d'acceuil</a></h1>
+    <a href="../index.php">Aller à la page d'acceuil</a></h1>
 
 </body>
 </html>
