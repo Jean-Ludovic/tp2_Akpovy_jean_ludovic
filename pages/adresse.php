@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Adresses <?php echo $current_iteration; ?></title>
+    <title>Adresses </title>
     <link rel="stylesheet" type="tecxt/css" href="../styles/styleaddresse.css">
 
 </head>
+<body>
 <?php
 
 require_once("../config/connexion.php");
@@ -66,7 +67,7 @@ if (isset($_GET['num_formulaires']) && isset($_GET['current_iteration'])) {
 ?>
 
 
-<body>
+
     <h2>Adresses<?php echo $current_iteration; ?></h2>
 
     <form action="adresse.php?num_formulaires=<?php echo $num_formulaires; ?>&current_iteration=<?php echo $current_iteration; ?>" method="post">
