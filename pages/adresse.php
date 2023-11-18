@@ -1,7 +1,7 @@
 <?php
 
 require_once("../config/connexion.php");
-require_once("../config/function.php");
+require_once("../config/functions.php");
 
 // Initialisation du tableau des données des itérations
 $data_iterations = [];
