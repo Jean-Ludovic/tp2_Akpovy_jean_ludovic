@@ -69,3 +69,44 @@ function afficherFormulaire() {
     </form>
     <?php
 }
+function supprimerDerniereDonnee($num_formulaires) {
+    global $conn;
+
+    try {
+        // Assurez-vous d'ajuster 'address' en fonction de votre nom de table
+        $sql = "DELETE FROM address WHERE num_formulaires = :num_formulaires AND id = (SELECT MAX(id) FROM address WHERE num_formulaires = :num_formulaires)";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':num_formulaires', $num_formulaires, PDO::PARAM_INT);
+        $stmt->execute();
+
+        return true;
+    } catch (PDOException $e) {
+        // Gérer l'erreur, par exemple, log ou afficher un message
+        error_log("Erreur de suppression : " . $e->getMessage());
+        return false;
+    }
+}
+
+function insertFormDataIntoDatabase($num_formulaires, $current_iteration, $data_iteration) {
+    global $conn;
+
+    try {
+        // Assurez-vous d'ajuster 'address' en fonction de votre nom de table
+        $sql = "INSERT INTO address (num_formulaires, iteration, street, street_nb, type, city, zipcode) VALUES (:num_formulaires, :current_iteration, :street, :street_nb, :type, :city, :zipcode)";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':num_formulaires', $num_formulaires, PDO::PARAM_INT);
+        $stmt->bindParam(':current_iteration', $current_iteration, PDO::PARAM_INT);
+        $stmt->bindParam(':street', $data_iteration['street'], PDO::PARAM_STR);
+        $stmt->bindParam(':street_nb', $data_iteration['street_nb'], PDO::PARAM_INT);
+        $stmt->bindParam(':type', $data_iteration['type'], PDO::PARAM_STR);
+        $stmt->bindParam(':city', $data_iteration['city'], PDO::PARAM_STR);
+        $stmt->bindParam(':zipcode', $data_iteration['zipcode'], PDO::PARAM_STR);
+        $stmt->execute();
+
+        return true;
+    } catch (PDOException $e) {
+        // Gérer l'erreur, par exemple, log ou afficher un message
+        error_log("Erreur d'insertion : " . $e->getMessage());
+        return false;
+    }
+}

@@ -49,7 +49,7 @@ if (isset($_GET['num_formulaires']) && isset($_GET['current_iteration'])) {
     <p>Cela vous convient-il ?</p><br>
     
  
- <form action="adresse.php" method="get">
+ <form action="modification.php" method="get">
     <input type="hidden" name="num_formulaires" value="<?php echo $num_formulaires; ?>">
     <input type="hidden" name="current_iteration" value="<?php echo $current_iteration; ?>">
     <input type="submit" name="modifier" value="Modifier">
