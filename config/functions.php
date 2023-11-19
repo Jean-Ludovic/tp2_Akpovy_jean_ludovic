@@ -69,5 +69,69 @@ function afficherFormulaire() {
     </form>
     <?php
 }
+function insererDonneesDansLaBase($num_formulaires, $current_iteration, $data_iterations) {
+    global $conn;
+
+    try {
+        // Commencer une transaction
+        $conn->beginTransaction();
+
+        // Boucler à travers les itérations et insérer les données dans la base de données
+        foreach ($data_iterations as $data_iteration) {
+            // Vérifier si les données existent déjà dans la base de données
+            if (!donneesExistantsDansLaBase($data_iteration)) {
+                $street = $data_iteration['street'];
+                $street_nb = $data_iteration['street_nb'];
+                $type = $data_iteration['type'];
+                $city = $data_iteration['city'];
+                $zipcode = $data_iteration['zipcode'];
+
+                // Insérer les données dans la table appropriée (ajustez cela en fonction de votre structure de base de données)
+                $sql = "INSERT INTO `address` (`street`, `street_nb`, `type`, `city`, `zipcode`) VALUES (:street, :street_nb, :type, :city, :zipcode)";
+                
+                $stmt = $conn->prepare($sql);
+
+                $stmt->bindParam(':street', $street);
+                $stmt->bindParam(':street_nb', $street_nb);
+                $stmt->bindParam(':type', $type);
+                $stmt->bindParam(':city', $city);
+                $stmt->bindParam(':zipcode', $zipcode);
+
+                $stmt->execute();
+            }
+        }
+
+        // Valider la transaction
+        $conn->commit();
+    } catch (PDOException $e) {
+        // En cas d'erreur, annuler la transaction
+        $conn->rollBack();
+        echo "Erreur d'insertion dans la base de données: " . $e->getMessage();
+    }
+}
+function donneesExistantsDansLaBase($data_iteration) {
+    global $conn;
+
+    $street = $data_iteration['street'];
+    $street_nb = $data_iteration['street_nb'];
+    $type = $data_iteration['type'];
+    $city = $data_iteration['city'];
+    $zipcode = $data_iteration['zipcode'];
+
+    $sql = "SELECT COUNT(*) FROM `address` WHERE `street` = :street AND `street_nb` = :street_nb AND `type` = :type AND `city` = :city AND `zipcode` = :zipcode";
+
+    $stmt = $conn->prepare($sql);
+
+    $stmt->bindParam(':street', $street);
+    $stmt->bindParam(':street_nb', $street_nb);
+    $stmt->bindParam(':type', $type);
+    $stmt->bindParam(':city', $city);
+    $stmt->bindParam(':zipcode', $zipcode);
+
+    $stmt->execute();
+
+    return $stmt->fetchColumn() > 0;
+}
+
 ?>
-?>
+
