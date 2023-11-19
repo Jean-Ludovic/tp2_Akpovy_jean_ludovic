@@ -4,7 +4,7 @@ require_once("../config/functions.php");
 
 // Initialisation du tableau des données des itérations
 $data_iterations = [];
-
+ 
 // Vérifier si les données du formulaire sont disponibles
 if (isset($_GET['num_formulaires']) && isset($_GET['current_iteration'])) {
     $num_formulaires = $_GET['num_formulaires'];
@@ -43,8 +43,12 @@ if (isset($_GET['num_formulaires']) && isset($_GET['current_iteration'])) {
             header("Location: $url");
             exit();
         } else {
-            // Si c'est la dernière itération, ne faites pas la redirection ici
-            // La redirection et l'insertion dans la base de données seront effectuées après la boucle
+            // Si c'est la dernière itération, insérer les données dans la base de données
+          
+           
+            // Rediriger vers la page de confirmation
+            header("Location: confirmation.php?num_formulaires=$num_formulaires&current_iteration=$current_iteration");
+            exit();
         }
     }
 
@@ -59,17 +63,60 @@ if (isset($_GET['num_formulaires']) && isset($_GET['current_iteration'])) {
         // Les données n'existent pas, afficher le formulaire vide
         afficherFormulaire();
     }
-
-    // Si c'est la dernière itération, insérer les données dans la base de données
-    if ($current_iteration > $num_formulaires) {
-        insererDonneesDansLaBase($num_formulaires, $current_iteration, $data_iterations);
-        // Rediriger vers la page de confirmation
-        header("Location: confirmation.php?num_formulaires=$num_formulaires&current_iteration=$current_iteration");
-        exit();
-    }
 } else {
     // Si les paramètres nécessaires ne sont pas présents, rediriger l'utilisateur
     header("Location: ../index.php");
     exit();
 }
 ?>
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adresses </title>
+    <link rel="stylesheet" type="text/css" href="../styles/styleaddresse.css">
+</head>
+<body>
+    <h2>Adresses<?php echo $current_iteration; ?></h2>
+
+    <form action="adresse.php?num_formulaires=<?php echo $num_formulaires; ?>&current_iteration=<?php echo $current_iteration; ?>" method="post">
+        <input type="hidden" name="num_formulaires" value="<?php echo $num_formulaires; ?>">
+        <input type="hidden" name="current_iteration" value="<?php echo $current_iteration; ?>">
+
+        <label for="street">Rue:</label>
+        <input type="text" id="street" name="street" maxlength="50" required>
+        <br>
+
+        <label for="street_nb">Numéro de Rue:</label>
+        <input type="number" id="street_nb" name="street_nb" required>
+        <br>
+
+        <label for="type">Type:</label>
+        <select id="type" name="type" maxlength="20" required>
+            <option value="livraison">Livraison</option>
+            <option value="facturation">Facturation</option>
+            <option value="autre">Autre</option>
+        </select>
+        <br>
+
+        <label for="city">Ville:</label>
+        <select id="city" name="city" required>
+            <option value="Montreal">Montréal</option>
+            <option value="Laval">Laval</option>
+            <option value="Toronto">Toronto</option>
+            <option value="Quebec">Québec</option>
+        </select>
+        <br>
+
+        <label for="zipcode">Code postal:</label>
+        <input type="text" id="zipcode" name="zipcode" pattern="[A-Za-z][0-9][A-Za-z] [0-9][A-Za-z][0-9]" maxlength="7" required>
+        <small>Format: A1A 1A1</small>
+        <br><br>
+
+        <input type="submit" value="Soumettre" name="envoyer">
+    </form>
+</body>
+</html>
