@@ -9,39 +9,70 @@
 </head>
 <body>
 <?php
+
 require_once("../config/connexion.php");
 require_once("../config/functions.php");
 
-// Vérifier si les données du formulaire sont disponibles
+// Initialisation du tableau des données des itérations
+$data_iterations = [];
+
 if (isset($_GET['num_formulaires']) && isset($_GET['current_iteration'])) {
     $num_formulaires = $_GET['num_formulaires'];
     $current_iteration = $_GET['current_iteration'];
 
-    // Récupérer les données actuelles du formulaire depuis la base de données
-    $donneesActuelles = getFormDataFromDatabase($num_formulaires, $current_iteration);
+    // Vérifier si le formulaire actuel a été soumis
+    if (isset($_POST['envoyer'])) {
+        // Traiter les données du formulaire actuel
+        $street = $_POST['street'];
+        $street_nb = $_POST['street_nb'];
+        $type = $_POST['type'];
+        $city = $_POST['city'];
+        $zipcode = $_POST['zipcode'];
 
-    // Vérifier si le formulaire a déjà été soumis
-    if (!empty($donneesActuelles)) {
-        // Les données existent, afficher le formulaire pré-rempli avec les données actuelles
-        afficherFormulaireAvecDonnees($donneesActuelles);
-    }
-}
+        // Ajouter les données de l'itération actuelle au tableau 
+        $data_iteration = [
+            'street' => $street,
+            'street_nb' => $street_nb,
+            'type' => $type,
+            'city' => $city,
+            'zipcode' => $zipcode,
+        ];
+        $data_iterations[] = $data_iteration;
 
-// Vérifier si le formulaire a été soumis
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Récupérer les nouvelles données du formulaire soumises
-    $nouvellesDonnees = array(
-        // Récupérer les données du formulaire depuis $_POST
-        // Exemple: 'nom' => $_POST['nom'],
-        // ...
-    );
+        // Si ce n'est pas la dernière itération, rediriger vers la prochaine itération
+        $current_iteration++;
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            // Récupérer les nouvelles données du formulaire soumises
+            $nouvellesDonnees = array(
+                'street' => $_POST['street'],
+                'street_nb' => $_POST['street_nb'],
+                'type' => $_POST['type'],
+                'city' => $_POST['city'],
+                'zipcode' => $_POST['zipcode'],
+            );
+        
+            // Vérifier si le bouton "Modifier" a été cliqué
+            if (isset($_POST['modifier'])) {
+                // Mettre à jour les données du formulaire dans la base de données
+                mettreAJourDonneesDansLaBase($num_formulaires, $current_iteration, $nouvellesDonnees);
+            } else {
+                // Insérer les nouvelles données dans la base de données
+                insererDonneesDansLaBase($num_formulaires, $current_iteration, $nouvellesDonnees);
+            }
+        
+            // Rediriger vers la page de confirmation
+            header("Location: confirmation.php?num_formulaires=$num_formulaires&current_iteration=$current_iteration");
+            exit();
+        }
+        $donneesActuelles = getFormDataFromDatabase($num_formulaires, $current_iteration);
 
-    // Mettre à jour les données du formulaire dans la base de données
-    mettreAJourDonneesDansLaBase($num_formulaires, $current_iteration, $nouvellesDonnees);
-
-    // Rediriger vers la page de confirmation
-    header("Location: confirmation.php?num_formulaires=$num_formulaires&current_iteration=$current_iteration");
-    exit();
+// Vérifier si le formulaire a déjà été soumis
+if (!empty($donneesActuelles)) {
+    // Les données existent, afficher le formulaire pré-rempli avec les données actuelles
+    afficherFormulaireAvecDonnees($donneesActuelles);
+} else {
+    // Les données n'existent pas, afficher le formulaire vide
+    afficherFormulaire();
 }
 
 ?>

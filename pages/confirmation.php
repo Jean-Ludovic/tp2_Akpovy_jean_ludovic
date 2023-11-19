@@ -48,15 +48,18 @@ if (isset($_GET['num_formulaires']) && isset($_GET['current_iteration'])) {
     <p>Merci pour votre soumission!</p><br>
     <p>Cela vous convient-il ?</p><br>
     
-    <!-- Modifier l'action du formulaire pour inclure les paramètres nécessaires -->
-    <form action="adresse.php" method="get">
-        <input type="hidden" name="num_formulaires" value="<?php echo $num_formulaires; ?>">
-        <input type="hidden" name="current_iteration" value="<?php echo $current_iteration; ?>">
-        <input type="submit" name="modifier" value="Modifier">
-    </form>
+ 
+ <form action="adresse.php" method="get">
+    <input type="hidden" name="num_formulaires" value="<?php echo $num_formulaires; ?>">
+    <input type="hidden" name="current_iteration" value="<?php echo $current_iteration; ?>">
+    <input type="submit" name="modifier" value="Modifier">
+</form>
 
-    <form action="affichage.php" method="post">
-        <input type="submit" name="confirmer" value="Confirmer">
-    </form>
+<form action="affichage.php" method="post">
+    <input type="submit" name="confirmer" value="Confirmer">
+</form>
+
+
+    
 </body>
 </html>
